@@ -71,11 +71,11 @@ public class GameController : MonoBehaviour
 
     //=====================================================================================================
     // Initialize
-    void OnEnable () 
+    public void Init () 
 	{
-		Debug.Log("GC OnEnable");
+		Debug.Log("GC Init");
          // Prepare Camera
-        if (!gameCamera) 
+        if (!gameCamera)	
 			gameCamera = Camera.main;
 		
 		gameCamera.orthographic = true;
@@ -92,20 +92,25 @@ public class GameController : MonoBehaviour
         // Try to automatically find/assign puzzle and background by tags
         if (findByTag)
         {
-            GameObject foundObject = GameObject.FindGameObjectWithTag("Puzzle_Main");
+            //GameObject foundObject = GameObject.FindGameObjectWithTag("Puzzle_Main");
+            GameObject foundObject = LevelController.Instance.currentPuzzle;
             if (foundObject)
                 puzzle = foundObject.GetComponent<PuzzleController>();
 
-            foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
+            //foundObject = GameObject.FindGameObjectWithTag("Puzzle_Background");
+            foundObject = puzzle.transform.GetChild(0).gameObject;
             if (foundObject)
                 background = foundObject.GetComponent<Renderer>();
+			Debug.Log(puzzle.name);
+			Debug.Log(background.name);
+
         }
         
         // Load saved data
         Load ();
 		LoadAudioActivity();
 
-        PlayMusic (musicMain, true); 
+        //PlayMusic (musicMain, true); 
 
 		// Prepare UI (disable all redudant at start)   
 		if (winUI) 
@@ -151,8 +156,9 @@ public class GameController : MonoBehaviour
         // Initiate puzzle and prepare background
         if (StartPuzzle(puzzle))
         {
+			Debug.Log("init- StartPuzzle");
             puzzle.SetPiecesActive(true);
-			Debug.Log(background);
+			Debug.Log("background" + background.name);
             PrepareBackground(background);
         }
 
@@ -207,7 +213,7 @@ public class GameController : MonoBehaviour
 					PlaySound(soundDrop);
 					break;
 
-				// Hide all pieces and finish game - if whole puzzle Assembled 	
+				// Hide all pieces and finish game - if whole puzzle Assembled 	游戏胜利
 				case PuzzleState.PuzzleAssembled:
 					if (background && !invertRules) 
 						puzzle.SetPiecesActive(false); 
@@ -382,6 +388,7 @@ public class GameController : MonoBehaviour
         // 尝试从拼图对象的第一个子对象拿到背景图    
         if (!_background && puzzle)
         {
+			Debug.Log("PrepareBackground");
             Transform tmp = puzzle.thisTransform.GetChild(0);
             if (!_background && puzzle && tmp.tag == "Puzzle_Background")
                 _background = tmp.GetComponent<Renderer>();
@@ -588,11 +595,19 @@ public class GameController : MonoBehaviour
 	// Restart current puzzle
 	public void RestartPuzzle()
 	{
-		if (puzzle != null)
+        Time.timeScale = 1.0f;
+		pauseUI.SetActive(false);
+		winUI.SetActive(false);
+		loseUI.SetActive(false);
+        if (puzzle != null)
 		{
-			PlayerPrefs.SetString(puzzle.name, "");
-			PlayerPrefs.DeleteKey(puzzle.name + "_Positions");
-		}
+			//PlayerPrefs.SetString(puzzle.name, "");
+			//PlayerPrefs.DeleteKey(puzzle.name + "_Positions");
+            PlayerPrefs.SetString(puzzle.name, "");
+            PlayerPrefs.DeleteKey(puzzle.name + "_Positions");
+            PlayerPrefs.SetInt(puzzle.name + "_hints", hintLimit);
+            PlayerPrefs.SetFloat(puzzle.name + "_timer", timer);
+        }
 
 		if (background && !invertRules)
 		{
@@ -608,7 +623,7 @@ public class GameController : MonoBehaviour
 		if (winUI)
 			winUI.SetActive(false);
 
-		PlayMusic(musicMain, true);
+		//PlayMusic(musicMain, true);
 		gameFinished = false;
 
 
@@ -621,15 +636,15 @@ public class GameController : MonoBehaviour
 	{
 		Time.timeScale = 1.0f;
 
-		if (puzzle != null) 
+		if (puzzle != null)
 		{
-			PlayerPrefs.SetString (puzzle.name, "");
-			PlayerPrefs.DeleteKey (puzzle.name + "_Positions");
-			PlayerPrefs.SetInt (puzzle.name + "_hints", hintLimit);
-			PlayerPrefs.SetFloat (puzzle.name + "_timer", timer);
+			PlayerPrefs.SetString(puzzle.name, "");
+			PlayerPrefs.DeleteKey(puzzle.name + "_Positions");
+			PlayerPrefs.SetInt(puzzle.name + "_hints", hintLimit);
+			PlayerPrefs.SetFloat(puzzle.name + "_timer", timer);
 		}
-
-		SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
+		Init();
+		//SceneManager.LoadScene (SceneManager.GetActiveScene().buildIndex);
 
 	}
 

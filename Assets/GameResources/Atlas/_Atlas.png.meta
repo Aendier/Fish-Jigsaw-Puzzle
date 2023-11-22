@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 14c5c02e3c5d69447872bac569f362f2
+guid: 0526a72049479f041b84adf9f213374f
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -57,7 +57,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 150
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,10 +90,10 @@ TextureImporter:
       name: piece_0
       rect:
         serializedVersion: 2
-        x: 643
+        x: 0
         y: 0
-        width: 640
-        height: 512
+        width: 625
+        height: 625
       alignment: 9
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,10 +111,10 @@ TextureImporter:
       name: piece_1
       rect:
         serializedVersion: 2
-        x: 1286
+        x: 1256
         y: 0
-        width: 512
-        height: 640
+        width: 500
+        height: 500
       alignment: 9
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,12 +132,12 @@ TextureImporter:
       name: piece_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 640
-        height: 640
+        x: 1256
+        y: 503
+        width: 500
+        height: 500
       alignment: 9
-      pivot: {x: 0, y: 0.8}
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -153,12 +153,12 @@ TextureImporter:
       name: piece_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 643
-        width: 512
-        height: 512
+        x: 628
+        y: 0
+        width: 625
+        height: 625
       alignment: 9
-      pivot: {x: 0, y: 1}
+      pivot: {x: 0.2, y: 0.8}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
